@@ -25,11 +25,6 @@ impl HS {
     pub fn new() -> Result<Self, Box<dyn std::error::Error>> {
         let config = config::read_config();
 
-        if config.key.is_empty() {
-            eprintln!("Error: Config file \"key\" value is missing");
-            return Err("Incomplete configuration".into());
-        }
-
         Ok(HS {
             client: Client::new(),
             config,
@@ -59,7 +54,7 @@ impl HS {
         }
     }
 
-    pub async fn run_interactive(&self, expression: &str) -> Result<(), Box<dyn std::error::Error>> {
+    pub async fn run_cli_mode(&self, expression: &str) -> Result<(), Box<dyn std::error::Error>> {
         if expression.trim().is_empty() {
             println!("Please provide an expression to translate");
             return Ok(());
@@ -78,8 +73,9 @@ impl HS {
         Ok(())
     }
 
-    pub async fn run_shell_mode(&self) -> Result<(), Box<dyn std::error::Error>> {
-        println!("hb2 shell mode - Ctrl+C to exit");
+    pub async fn run_interactive_mode(&self) -> Result<(), Box<dyn std::error::Error>> {
+
+        println!("HS interactive mode - Press Ctrl+H to translate");
 
         enable_raw_mode()?;
 
@@ -98,7 +94,7 @@ impl HS {
                         process::exit(0);
                     }
                     Event::Key(KeyEvent {
-                        code: KeyCode::Char('i'),
+                        code: KeyCode::Char('h'),
                         modifiers: KeyModifiers::CONTROL,
                         ..
                     }) => {
@@ -110,7 +106,7 @@ impl HS {
                         io::stdin().read_line(&mut expression)?;
 
                         if !expression.trim().is_empty() {
-                            self.run_interactive(expression.trim()).await?;
+                            self.run_cli_mode(expression.trim()).await?;
                         }
 
                         println!("\nPress Ctrl+H to translate, Ctrl+C to exit");
