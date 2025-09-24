@@ -12,7 +12,7 @@ Instructions:
    - May require using sudo when the user is not root (ROOT_PERMISSION)
 5. Output ONLY the {{SHELL}} command without any additional explanation or commentary
 6. If the expression cannot be directly translated to a {{SHELL}} command, return an empty string
-7. Do not return the command between markdown or XML tags.
+7. Do not return the command between Markdown or XML tags.
 </instruction>
 
 Examples:

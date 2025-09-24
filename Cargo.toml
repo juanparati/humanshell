@@ -16,3 +16,4 @@ clap = { version = "4.0", features = ["derive"] }
 crossterm = "0.27"
 sysinfo = "0.37.0"
 dirs-next = "2.0.0"
+which = "8.0.0"

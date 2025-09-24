@@ -74,7 +74,7 @@ pub fn prompt_for_config() -> Config {
 fn save_config(config: &Config) -> Result<(), Box<dyn std::error::Error>> {
     let config_path = home_dir().ok_or("Could not find home directory")?;
     let mut path = config_path;
-    path.extend([".config", "hs"]);
+    path.extend([".config", "humanshell"]);
     
     // Create directories if they don't exist
     fs::create_dir_all(&path)?;
@@ -95,7 +95,7 @@ pub fn read_config() -> Config {
     }
 
     let mut path = config_path.unwrap();
-    path.extend([".config", "hs", "config.json"]);
+    path.extend([".config", "humanshell", "config.json"]);
 
     if !path.exists() {
         return prompt_for_config();

@@ -1,5 +1,5 @@
 # Bash
-hb2_ask() {
+hs_ask() {
   local question="$READLINE_LINE"
 
   # If the line is empty, do nothing.
@@ -22,4 +22,4 @@ hb2_ask() {
 }
 
 # Bind Ctrl+H to trigger the function
-bind -x '"\C-h":hb2_ask'
+bind -x '"\C-h":hs_ask'
