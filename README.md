@@ -1,4 +1,4 @@
-# hb2 - Human to Shell Translator
+# hb - Human to Shell Translator
 
 A command-line tool that translates human expressions into shell commands using the Anthropic API and Open AI API.
 
