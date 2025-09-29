@@ -7,3 +7,12 @@ A command-line tool that translates human expressions into shell commands using 
 - Translates natural language descriptions into bash commands
 - Shell integration for bash and zsh
 - Direct command-line usage
+
+## AI integrations
+
+- anthropic
+- openai
+
+## Plugins
+
+See [shell integrations](shell_integrations)
