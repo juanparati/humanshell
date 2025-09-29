@@ -13,7 +13,7 @@ pub async fn call_api(
         "messages": [
             {
                 "role": "user",
-                "content": prompt
+                "content": &prompt
             }
         ]
     });

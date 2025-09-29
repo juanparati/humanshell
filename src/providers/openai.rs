@@ -12,16 +12,16 @@ pub async fn call_api(
         "messages": [
             {
                 "role": "user",
-                "content": prompt
+                "content": &prompt
             }
         ],
         "max_tokens": 1000,
         "temperature": 0.1
     });
-    
+
     let response = client
         .post(&config.endpoint)
-        .header("Authorization", format!("Bearer {}", &config.key))
+        .header("authorization", format!("Bearer {}", &config.key))
         .header("content-type", "application/json")
         .json(&request_body)
         .send()

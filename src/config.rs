@@ -104,12 +104,5 @@ pub fn read_config() -> Config {
     let contents = fs::read_to_string(path)
         .expect("Something went wrong reading the config file");
 
-    let mut config: Config = serde_json::from_str(&contents).expect("Error parsing config file");
-
-    // Set default openai_endpoint if api_type is openai and openai_endpoint is not set
-    if config.api_type == "openai" {
-        config.endpoint = "https://api.openai.com/v1/chat/completions".to_string();
-    }
-
-    config
+    serde_json::from_str(&contents).expect("Error parsing config file")
 }
