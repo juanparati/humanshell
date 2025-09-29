@@ -69,11 +69,20 @@ jobs:
     - name: Run tests
       run: cargo test --target ${{ matrix.target }}
 
+    - name: Resolve binary name
+      shell: bash
+      run: |  
+        # Find the binary name from Cargo.toml
+        BINARY_NAME=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[0].targets[] | select(.kind[] | contains("bin")) | .name' | head -1)
+      
+         # Export BINARY_NAME to make it available for subsequent steps
+        echo "BINARY_NAME=$BINARY_NAME" >> $GITHUB_ENV
+
     - name: Upload binary to release
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: target/release/${{ matrix.asset_name }}
-        asset_name: ${{ matrix.asset_name }}
+        file: ${{ matrix.artifact_name }}/${{ env.BINARY_NAME }}
+        asset_name: ${{ env.BINARY_NAME }}-${{ matrix.asset_name }}
         tag: ${{ github.ref }}
         overwrite: true
