@@ -1,10 +1,8 @@
 name: Build Rust Project
 
 on:
-  push:
-    branches: [ main, develop ]
-  pull_request:
-    branches: [ main ]
+  release:
+    types: [created]
 
 jobs:
   build:
@@ -88,12 +86,9 @@ jobs:
         # Find the binary name from Cargo.toml
         BINARY_NAME=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[0].targets[] | select(.kind[] | contains("bin")) | .name' | head -1)
         
-        # Copy binary with platform-specific name
-        if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
-          cp "${{ matrix.artifact_name }}/${BINARY_NAME}.exe" "artifacts/${BINARY_NAME}-${{ matrix.asset_name }}.exe"
-        else
-          cp "${{ matrix.artifact_name }}/${BINARY_NAME}" "artifacts/${BINARY_NAME}-${{ matrix.asset_name }}"
-        fi
+        # Copy binary with platform-specific name      
+        cp "${{ matrix.artifact_name }}/${BINARY_NAME}" "artifacts/${BINARY_NAME}-${{ matrix.asset_name }}"
+       
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
