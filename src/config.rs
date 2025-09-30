@@ -36,7 +36,7 @@ pub fn prompt_for_config() -> Config {
     let key = key.trim().to_string();
 
     // Prompt for model (with default)
-    let default_model = "claude-3-5-sonnet-20241022";
+    let default_model = if api_type == "anthropic" { "claude-3-5-sonnet-20241022" } else { "gpt-3.5-turbo" };
     print!("Enter model name [default: {}]: ", default_model);
     io::stdout().flush().unwrap();
     let mut model = String::new();
