@@ -1,7 +1,12 @@
 [package]
 name = "humanshell"
+description = "A command-line tool that translates human expressions into shell commands"
+keywords = ["human", "ai", "shell", "bash", "zsh"]
+categories = ["command-line-utilities"]
 version = "1.0.0"
 edition = "2021"
+license = "MIT"
+authors = ["Juan Lago <juanparati@gmail.com>"]
 
 [profile.release]
 strip = true
