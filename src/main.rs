@@ -9,7 +9,7 @@ mod providers;
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let matches = Command::new("hs")
-        .version("1.0.0")
+        .version(env!("CARGO_PKG_VERSION"))
         .about("Human to Shell translator")
         .arg(
             Arg::new("expression")
