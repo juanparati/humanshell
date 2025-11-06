@@ -7,6 +7,7 @@ version = "1.0.1"
 edition = "2021"
 license = "MIT"
 authors = ["Juan Lago <juanparati@gmail.com>"]
+repository = "https://github.com/juanparati/humanshell"
 
 [profile.release]
 strip = true
