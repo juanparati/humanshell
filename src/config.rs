@@ -1,7 +1,9 @@
 use std::fs;
 use std::io::{self, Write};
 use serde::{Deserialize, Serialize};
-use dirs_next::home_dir;
+use std::path::PathBuf;
+
+static CONFIG_PATH: [&str; 2] = [".config", "humanshell"];
 
 #[derive(Serialize, Deserialize)]
 pub struct Config {
@@ -80,10 +82,8 @@ fn prompt_option(prompt: &str, default: Option<&str>) -> String {
  * Saves the config to the home directory.
  */
 fn save_config(config: &Config) -> Result<(), Box<dyn std::error::Error>> {
-    let config_path = home_dir().ok_or("Could not find home directory")?;
-    let mut path = config_path;
-    path.extend([".config", "humanshell"]);
-    
+    let mut path = retrieve_config_path();
+
     // Create directories if they don't exist
     fs::create_dir_all(&path)?;
     
@@ -100,14 +100,8 @@ fn save_config(config: &Config) -> Result<(), Box<dyn std::error::Error>> {
  * If the file does not exist, prompts the user for the config.
  */
 pub fn read_config() -> Config {
-    let config_path = home_dir();
-
-    if config_path.is_none() {
-        return prompt_for_config();
-    }
-
-    let mut path = config_path.unwrap();
-    path.extend([".config", "humanshell", "config.json"]);
+    let mut path = retrieve_config_path();
+    path.push("config.json");
 
     if !path.exists() {
         return prompt_for_config();
@@ -117,4 +111,14 @@ pub fn read_config() -> Config {
         .expect("Something went wrong reading the config file");
 
     serde_json::from_str(&contents).expect("Error parsing config file")
+}
+
+pub fn retrieve_config_path() -> PathBuf {
+    let mut path = dirs_next::home_dir().expect("Could not find home directory");
+    path.extend(CONFIG_PATH);
+
+    // Do not allow mutation to avoid pollution.
+    let path = path;
+
+    path
 }

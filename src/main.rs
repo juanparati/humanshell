@@ -6,6 +6,7 @@ mod system_info;
 mod hs;
 mod providers;
 
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let matches = Command::new("hs")
